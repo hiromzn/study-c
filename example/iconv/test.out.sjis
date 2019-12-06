@@ -1,0 +1,2 @@
+iconv_open( dest:EUCJP, src:UTF-8 );
+日本語テストメッセージおはよう

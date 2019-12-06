@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <iconv.h>
 
 #define  BUFSIZE  1024
@@ -15,7 +17,7 @@ main(void)
 {
     int ret;
 
-    ret = convert("SHIFT-JIS", "UTF-8",
+    ret = convert("UTF-8", "EUCJP",
                   "日本語テストメッセージおはよう",
                   outbuf, sizeof(outbuf));
     if (ret) {
@@ -36,6 +38,7 @@ int convert(char const *src,
     size_t srclen, destlen;
     size_t ret;
 
+	printf( "iconv_open( dest:%s, src:%s );\n", dest, src );
     cd = iconv_open(dest, src);
     if (cd == (iconv_t)-1) {
         perror("iconv open");
@@ -48,7 +51,7 @@ int convert(char const *src,
 
     ret = iconv(cd, &text, &srclen, &buf, &destlen);
     if (ret == -1) {
-        perror("iconv");
+        perror("ERROR:(iconv):");
         return 0;
     }
 
