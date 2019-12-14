@@ -17,11 +17,12 @@ int main( int argc, char **argv )
 {
     int ret;
 
-    // ret = convert("UTF-8", "EUCJP",
-    // ret = convert("UTF-8", "SJIS",
-    ret = convert("UTF-8", "eucJP",
+    // OK: ret = convert("UTF-8", "EUCJP",
+    // OK: ret = convert("UTF-8", "SJIS",
+    // OK: ret = convert("UTF-8", "eucJP",
+    ret = convert("eucJP", "SJIS",
                   // "日本語テストメッセージおはよう",
-                  "日本",
+                  "Abcdef Xyzze",
                   outbuf, sizeof(outbuf));
     if (!ret) {
         printf("%s\n", outbuf);
@@ -30,6 +31,26 @@ int main( int argc, char **argv )
         printf("Oops!\n");
     }
 	return( ret );
+}
+
+int call_iconv( 
+			   iconv_t cd,
+			   int	slen,
+			   int	dlen,
+			   char*	sbuf,
+			   char*	dbuf )
+{
+  int ret;
+
+  printf( "before : iconv_open( dest:%s:%d <- src:%s:%d );\n", dbuf, dlen, sbuf, slen );
+  ret = iconv(cd, &sbuf, &slen, &dbuf, &dlen);
+  printf( "before : iconv_open( dest:%s:%d <- src:%s:%d );\n", dbuf, dlen, sbuf, slen );
+
+  if (ret == -1) {
+	perror("ERROR:(iconv):");
+	return 1;
+  }
+  return 0;
 }
 
 int convert(char const *src,
@@ -49,19 +70,13 @@ int convert(char const *src,
         return 1;
     }
 
-    srclen = strlen(text);
+    srclen = strlen(text) + 1;
     destlen = bufsize - 1;
     memset(buf, '\0', bufsize);
 
-	printf( "before : iconv_open( dest:%s:%d <- src:%s:%d );\n", dest, destlen, src, srclen );
-    ret = iconv(cd, &text, &srclen, &buf, &destlen);
-	printf( "after  : iconv_open( dest:%s:%d <- src:%s:%d );\n", dest, destlen, src, srclen );
+    ret = call_iconv(cd, srclen, destlen, text, buf );
 
-    if (ret == -1) {
-        perror("ERROR:(iconv):");
-        return 1;
-    }
+	iconv_close(cd);
 
-    iconv_close(cd);
-    return 0;
+	return( ret );
 }

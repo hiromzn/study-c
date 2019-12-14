@@ -1,0 +1,29 @@
+
+runexe()
+{
+		max=$1;
+		exe=$2;
+
+		log=./log/log.$exe
+		cp /dev/null $log
+
+		err=0;
+		i=0;
+		while [ $i -lt $max ]; do
+				./$exe >>$log 2>&1
+				if [ $? -gt 0 ]; then
+				   err=$(expr $err + 1);
+				fi
+				i=$(expr $i + 1);
+		done
+		msg="NG";
+		if [ $err -eq 0 ]; then
+		   msg="OK";
+		fi
+		echo "RES: $msg : $exe : err=$err/$max"
+}
+
+for exe in $*
+do
+		runexe 20 $exe
+done

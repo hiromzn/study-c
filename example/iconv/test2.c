@@ -13,7 +13,7 @@ int convert(char const *src,
             char *buf,
             size_t bufsize);
 
-void main( int argc, char **argv )
+int main( int argc, char **argv )
 {
     int ret;
 
@@ -24,12 +24,13 @@ void main( int argc, char **argv )
                   // "日本語テストメッセージおはよう",
                   "Abcdef Xyzze",
                   outbuf, sizeof(outbuf));
-    if (ret) {
+    if (!ret) {
         printf("%s\n", outbuf);
     }
     else {
         printf("Oops!\n");
     }
+	return( ret );
 }
 
 int convert(char const *src,
@@ -46,7 +47,7 @@ int convert(char const *src,
     cd = iconv_open(dest, src);
     if (cd == (iconv_t)-1) {
         perror("iconv open");
-        return 0;
+        return 1;
     }
 
     srclen = strlen(text) + 1;
@@ -59,9 +60,9 @@ int convert(char const *src,
 
     if (ret == -1) {
         perror("ERROR:(iconv):");
-        return 0;
+        return 1;
     }
 
     iconv_close(cd);
-    return 1;
+    return 0;
 }

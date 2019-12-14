@@ -1,13 +1,19 @@
 
-allexe = test test2
+CC = gcc
 
-all : $(allexe)
+CFLAGS = -g -Wall -std=c99
+
+srcs = $(wildcard *.c)
+
+tgt = $(srcs:.c=)
+
+all : $(tgt)
+
+$(tgt): %: %.c
+	$(CC) $(CFLAGS) $< -o $@
 
 clean :
-	rm -f $(allexe)
+	rm -f $(tgt) *~
 
-test : test.c
-	cc -g -o $@ $<
-
-test2 : test2.c
-	cc -g -o $@ $<
+run :
+	./runtest $(tgt)
