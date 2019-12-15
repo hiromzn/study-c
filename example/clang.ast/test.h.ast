@@ -1,0 +1,23 @@
+TranslationUnitDecl 0x7fd34c030008 <<invalid sloc>> <invalid sloc>
+|-TypedefDecl 0x7fd34c0308a0 <<invalid sloc>> <invalid sloc> implicit __int128_t '__int128'
+| `-BuiltinType 0x7fd34c0305a0 '__int128'
+|-TypedefDecl 0x7fd34c030908 <<invalid sloc>> <invalid sloc> implicit __uint128_t 'unsigned __int128'
+| `-BuiltinType 0x7fd34c0305c0 'unsigned __int128'
+|-TypedefDecl 0x7fd34c030bb8 <<invalid sloc>> <invalid sloc> implicit __NSConstantString 'struct __NSConstantString_tag'
+| `-RecordType 0x7fd34c0309d0 'struct __NSConstantString_tag'
+|   `-Record 0x7fd34c030958 '__NSConstantString_tag'
+|-TypedefDecl 0x7fd34c030c50 <<invalid sloc>> <invalid sloc> implicit __builtin_ms_va_list 'char *'
+| `-PointerType 0x7fd34c030c10 'char *'
+|   `-BuiltinType 0x7fd34c0300a0 'char'
+|-TypedefDecl 0x7fd34c030ef8 <<invalid sloc>> <invalid sloc> implicit __builtin_va_list 'struct __va_list_tag [1]'
+| `-ConstantArrayType 0x7fd34c030ea0 'struct __va_list_tag [1]' 1 
+|   `-RecordType 0x7fd34c030d20 'struct __va_list_tag'
+|     `-Record 0x7fd34c030ca0 '__va_list_tag'
+|-RecordDecl 0x7fd34c030f48 <test.h:1:9, line:5:1> line:1:16 struct my_test definition
+| |-FieldDecl 0x7fd34c087c00 <line:2:2, col:7> col:7 i 'int'
+| |-FieldDecl 0x7fd34c087c60 <line:3:2, col:8> col:8 p 'char *'
+| `-FieldDecl 0x7fd34c087cc0 <line:4:2, col:7> col:7 l 'long'
+`-TypedefDecl 0x7fd34c087d68 <line:1:1, line:5:3> col:3 MY_TEST 'struct my_test':'struct my_test'
+  `-ElaboratedType 0x7fd34c087d10 'struct my_test' sugar
+    `-RecordType 0x7fd34c030fc0 'struct my_test'
+      `-Record 0x7fd34c030f48 'my_test'
