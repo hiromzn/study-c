@@ -2,6 +2,7 @@
 CC = gcc
 
 CFLAGS = -g -Wall -std=c99
+# MAC # CFLAGS = -g -Wall -std=c99 -liconv
 
 srcs = $(wildcard *.c)
 
