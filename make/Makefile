@@ -1,5 +1,12 @@
-
+#
+# SILENT demo
+#
+#   default : silent mode
+#   usage of no silent : make SILENT_FLAG="" all
+#
 SILENT_FLAG = .SILENT
+
+$(SILENT_FLAG) :
 
 CC = gcc
 
@@ -17,6 +24,4 @@ $(tgt): %: %.c
 clean :
 	rm -f $(tgt) *~
 
-$(SILENT_FLAG) :
 
-#.SILENT : $(SILENT_FLAG)
