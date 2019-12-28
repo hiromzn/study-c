@@ -15,6 +15,7 @@ $(tgt): %: %.c
 
 clean :
 	rm -f $(tgt) *~
+	rm -rf $(tgt).dSYM
 
 run :
 	./runtest $(tgt)
