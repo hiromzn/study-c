@@ -28,15 +28,15 @@ typedef struct test_struct {
 #define PR_MEM_ADR( _s_, _m_ )		printf("%s:%p\n", #_m_, &(_s_._m_) )
 
 #define PR_MEM_OFFSET( _s_, _m_ ) \
-	printf("member:%s, size:%ld, offset=%ld=0x%lX\n", #_m_, sizeof(_s_._m_), \
-		(void*)&(_s_._m_) - (void*)&_s_, \
-		(void*)&(_s_._m_) - (void*)&_s_ )
+	printf("member:%s, size:%ld, offset=%ld=0x%lX\n", \
+		#_m_, \
+		(long int)sizeof(_s_._m_), \
+		(long int)((void*)&(_s_._m_) - (void*)&_s_), \
+		(long unsigned int)((void*)&(_s_._m_) - (void*)&_s_) )
 
 int main()
 {
 	TestSTR str;
-
-	str.d1 = 123;
 
 	PR_MEM_OFFSET( str, c3 );
 	PR_MEM_OFFSET( str, d1 );
