@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <sqlda.h>
+#include <sqlcpr.h>
+
+int main()
+{
+	int a;
+
+	EXEC SQL SELECT salary INTO :a
+		FROM Employee
+		WHERE SSN=876543210;
+
+	printf("The salary is %d\n", a);
+
+	return(0);
+}
