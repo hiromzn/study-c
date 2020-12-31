@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -9,12 +7,13 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-extern int connect_nonblock(int socket, struct sockaddr * name, int namelen, struct timeval timeout );
+extern int connect_nonblock( int , struct sockaddr *, int, struct timeval, int * );
+extern char* connect_nonblock_get_error_message( int );
  
 int main( int argc, char **argv )
 {
-    int sockfd;
-    struct sockaddr_in addr;
+	int sockfd;
+	struct sockaddr_in addr;
 	int i;
 	int ret;
 	char *adr_str = "127.0.0.1";
@@ -26,45 +25,41 @@ int main( int argc, char **argv )
 	}
 	adr_str = argv[1];
 	port = atoi( argv[2] );
-    // ソケット生成
-    if( (sockfd = socket( AF_INET, SOCK_STREAM, 0) ) < 0 ) {
-        perror( "socket" );
-    }
+	if( (sockfd = socket( AF_INET, SOCK_STREAM, 0) ) < 0 ) {
+		perror( "socket" );
+	}
  
-    // 送信先アドレス・ポート番号設定
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons( port );
-    addr.sin_addr.s_addr = inet_addr( adr_str );
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons( port );
+	addr.sin_addr.s_addr = inet_addr( adr_str );
  
 	struct timeval timeout;
+	int error_id = 0;
 	timeout.tv_sec = 5; /* 5 sec */
 	timeout.tv_usec = 0; /* Microseconds. */
-    // サーバ接続
 	printf( "connect_nonblock( %s, %d )\n", adr_str, port );
-    ret = connect_nonblock( sockfd, (struct sockaddr *)&addr, sizeof( struct sockaddr_in ), timeout );
+	ret = connect_nonblock( sockfd, (struct sockaddr *)&addr, sizeof( struct sockaddr_in ), timeout, &error_id );
 	if ( ret < 0 ) {
-		fprintf( stderr, "ERROR: connect() errno:%d\n", errno );
-		perror( "ERROR: connect() errno" );
+		fprintf( stderr, "ERROR: connect_noblock() : %s : errno=%d\n", connect_nonblock_get_error_message(error_id), errno );
+		if( errno ) perror("connect_nonblock");
 		return(1);
 	}
  
-    // データ送信
-    char send_str[10];
-    char receive_str[10];
-    for ( i = 0; i < 10; i++ ){
-        sprintf( send_str, "%d", i );
-        printf( "send:%d\n", i );
-        if( send( sockfd, send_str, 10, 0 ) < 0 ) {
-            perror( "send" );
-        } else {
-            recv( sockfd, receive_str, 10, 0 );
-            printf( "receive:%s\n", receive_str );
-        }
-        sleep( 1 );
-    }
+	char send_str[10];
+	char receive_str[10];
+	for ( i = 0; i < 10; i++ ){
+		sprintf( send_str, "%d", i );
+		printf( "send:%d\n", i );
+		if( send( sockfd, send_str, 10, 0 ) < 0 ) {
+			perror( "send" );
+		} else {
+			recv( sockfd, receive_str, 10, 0 );
+			printf( "receive:%s\n", receive_str );
+		}
+		sleep( 1 );
+	}
  
-    // ソケットクローズ
-    close( sockfd );
+	close( sockfd );
  
-    return 0;
+	return 0;
 }
