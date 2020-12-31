@@ -13,7 +13,7 @@ $(TGT) : $(TGT:.o=.c)
 	gcc -g -c $?
 
 clean :
-	rm -rf $(TGT) $(TEST) $(TGT:.o=) *.dSYM
+	rm -rf $(TGT) $(TEST) $(TGT:.o=)
 
 ftest :
 	gcc -g -o $(TGT:.o=) connect_timeout.c -DTEST_MAKE
