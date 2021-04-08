@@ -14,6 +14,5 @@ $(TGT) : $(TGT:.o=.c)
 
 clean :
 	rm -rf $(TGT) $(TEST) $(TGT:.o=)
+	rm -rf *.dSYM
 
-ftest :
-	gcc -g -o $(TGT:.o=) connect_timeout.c -DTEST_MAKE
