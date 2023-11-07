@@ -1,0 +1,3 @@
+num=$1;
+if [ "_NULL_$num" = "_NULL_" ]; then num=`cat`;fi
+echo "obase=16;$num" |bc

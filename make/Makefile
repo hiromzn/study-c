@@ -4,7 +4,7 @@
 #   default : silent mode
 #   usage of no silent : make SILENT_FLAG="" all
 #
-SILENT_FLAG = .SILENT
+#SILENT_FLAG = .SILENT
 
 $(SILENT_FLAG) :
 

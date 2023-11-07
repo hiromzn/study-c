@@ -1,0 +1,4 @@
+num=$1;
+if [ "_NULL_$num" = "_NULL_" ]; then num=`cat`;fi
+num="`echo $num |tr '[:lower:]' '[:upper:]'`"
+echo "ibase=16;$num" |bc
